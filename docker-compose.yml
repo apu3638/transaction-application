@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+  web-server:
+    image: nginx:alpine
+    container_name: bs23-nginx
+    restart: unless-stopped
+    ports:
+      - 8080:80
+      - 44030:443
+    volumes:
+      - ./:/var/www/html:cached
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/conf.d/ssl
+    networks:
+      - bs23-network
+    depends_on:
+      - app-server
+
+  app-server:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+      target: php
+    container_name: bs23-app
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html:cached
+      - ./docker/php/php-fpm.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ~/.ssh:/root/.ssh
+    networks:
+      - bs23-network
+    depends_on:
+      - database-server
+
+  database-server:
+    image: mysql:5.7.36
+    container_name: bs23-database
+    restart: unless-stopped
+    ports:
+      - 7706:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=bs23
+      - MYSQL_USER=limon
+      - MYSQL_PASSWORD=369949
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - bs23-network
+
+networks:
+  bs23-network:
+    driver: bridge
