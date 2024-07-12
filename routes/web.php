@@ -11,3 +11,6 @@
 |
 */
 
+\Illuminate\Support\Facades\Route::get('/',function (){
+   dd("Hello world");
+});
