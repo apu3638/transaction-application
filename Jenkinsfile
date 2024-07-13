@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+      docker {
+          image 'php:7.4-cli' // or any PHP image that includes Composer
+      }
+  }
   environment {
     IMAGE_NAME  = 'limon408/bs23'
     IMAGE_TAG   = 'v2'
