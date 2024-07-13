@@ -1,10 +1,11 @@
 pipeline {
   agent any
   environment {
-    IMAGE_NAME  = 'bs23'
-    IMAGE_TAG   = 'v1'
+    IMAGE_NAME  = 'limon408/bs23'
+    IMAGE_TAG   = 'v2'
     APP_NAME    = 'bs23'
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Jenkins credentials ID for Docker Hub
+    // Note: DOCKERHUB_CREDENTIALS remains as is to be used in the script block
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
   }
   stages {
      stage('Checkout') {
@@ -24,10 +25,10 @@ pipeline {
   }
   post {
     success {
-        echo 'Pipeline succeeded!'
+      echo 'Pipeline succeeded!'
     }
     failure {
-        echo 'Pipeline failed!'
+      echo 'Pipeline failed!'
     }
   }
 }
