@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    IMAGE_NAME  = 'bs23'
-    IMAGE_TAG   = 'v1'
+    IMAGE_NAME  = 'limon408/bs23'
+    IMAGE_TAG   = 'v2'
     APP_NAME    = 'bs23'
     // Note: DOCKERHUB_CREDENTIALS remains as is to be used in the script block
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
