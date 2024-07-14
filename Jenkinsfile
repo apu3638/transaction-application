@@ -1,20 +1,19 @@
 pipeline {
     agent {
-        docker { image 'node:20.15.1-alpine3.20' }
+        docker {
+            image 'node:20.15.1-alpine3.20'
+        }
     }
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
                 sh 'node --version'
             }
         }
-    }
-    post {
-        success {
-          echo 'Pipeline succeeded!'
-        }
-        failure {
-          echo 'Pipeline failed!'
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
         }
     }
 }
