@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'php:7.4-cli' // Specify the Docker image you want to use
-      // You can add other Docker-related configurations here if needed
-    }
-  }
+  agent any
   environment {
     IMAGE_NAME = 'limon408/bs23'
     IMAGE_TAG = 'v2'
