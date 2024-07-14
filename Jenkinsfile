@@ -1,30 +1,20 @@
 pipeline {
-  agent any
-  environment {
-    IMAGE_NAME = 'limon408/bs23'
-    IMAGE_TAG = 'v2'
-    APP_NAME = 'bs23'
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
-  stages {
-    stage('Checkout') {
-      steps {
-        git url: 'https://github.com/limonbat/transaction-application.git', branch: 'main'
-      }
+    agent {
+        docker { image 'node:20.15.1-alpine3.20' }
     }
-    stage('Install Dependencies') {
-      steps {
-        sh 'composer install'
-        sh 'php artisan key:generate'
-      }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
     }
-  }
-  post {
-    success {
-      echo 'Pipeline succeeded!'
+    post {
+        success {
+          echo 'Pipeline succeeded!'
+        }
+        failure {
+          echo 'Pipeline failed!'
+        }
     }
-    failure {
-      echo 'Pipeline failed!'
-    }
-  }
 }
