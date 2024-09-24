@@ -17,16 +17,6 @@ pipeline {
             } 
         }
     }
-    post {
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed!'
-        }
-        always {
-            echo 'Cleaning up...'
-            // Any cleanup commands can go here
-        }
+    
     }
-}
+
